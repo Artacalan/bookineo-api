@@ -6,3 +6,5 @@
 /var/
 /vendor/
 /.env.dev
+/.idea/
+/.vscode/

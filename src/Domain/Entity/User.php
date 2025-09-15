@@ -28,6 +28,9 @@ final class User //implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[ORM\Column]
+    private ?\DateTimeImmutable $birthdate;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
@@ -96,6 +99,18 @@ final class User //implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTimeImmutable
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(?\DateTimeImmutable $birthdate): static
+    {
+        $this->birthdate = $birthdate;
 
         return $this;
     }

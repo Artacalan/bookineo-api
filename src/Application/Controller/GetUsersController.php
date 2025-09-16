@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Application\Controller;
 
-use App\UserRepository;
+use App\Infrastructure\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

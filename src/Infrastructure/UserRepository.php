@@ -42,26 +42,26 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         return null;
     }
 
-//    public function create_user($first_name, $last_name, $email, $birthday, $password)
-//    {
-//        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-//
-//        $sql = "INSERT INTO users (first_name, last_name, email, birthday, password)
-//                VALUES (:first_name, :last_name, :email, :birthday, :password)";
-//
-//        $connection = $this->getEntityManager()->getConnection();
-//        $statement = $connection->prepare($sql);
-//        $statement->bindValue('first_name', $first_name);
-//        $statement->bindValue('last_name', $last_name);
-//        $statement->bindValue('email', $email);
-//        $statement->bindValue('birthday', $birthday->format('Y-m-d'));
-//        $statement->bindValue('password', $hashedPassword);
-//
-//        try {
-//            $statement->executeStatement();
-//            return "created";
-//        } catch (\Exception $e) {
-//            return "error: " . $e->getMessage();
-//        }
-//    }
+   public function create_user($first_name, $last_name, $email, $birthday, $password)
+   {
+       $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+       $sql = "INSERT INTO users (first_name, last_name, email, birthday, password)
+               VALUES (:first_name, :last_name, :email, :birthday, :password)";
+
+       $connection = $this->getEntityManager()->getConnection();
+       $statement = $connection->prepare($sql);
+       $statement->bindValue('first_name', $first_name);
+       $statement->bindValue('last_name', $last_name);
+       $statement->bindValue('email', $email);
+       $statement->bindValue('birthday', $birthday->format('Y-m-d'));
+       $statement->bindValue('password', $hashedPassword);
+
+       try {
+           $statement->executeStatement();
+           return "created";
+       } catch (\Exception $e) {
+           return "error: " . $e->getMessage();
+       }
+   }
 }

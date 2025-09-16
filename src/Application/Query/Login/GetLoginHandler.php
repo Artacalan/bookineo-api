@@ -3,7 +3,6 @@
 namespace App\Application\Query\Login;
 
 use App\Domain\UserRepositoryInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GetLoginHandler
 {

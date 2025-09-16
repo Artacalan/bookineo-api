@@ -19,8 +19,11 @@ class CreateBookController extends AbstractController
     public function create(Request $request): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
-        $result = $this->handler->handle($data);
-
-        return $this->json($result);
+        try {
+            $this->handler->handle($data);
+            return $this->json(['status' => 'success', 'message' => 'Book created successfully']);
+        } catch (\Exception $e) {
+            return $this->json(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
     }
 }

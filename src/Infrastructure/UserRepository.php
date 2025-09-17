@@ -104,4 +104,24 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
               return "error: " . $e->getMessage();
          }
     }
+
+    public function update_user($id, $first_name, $last_name, $email, $birthday)
+    {
+        $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, email = :email, birthday = :birthday WHERE id = :id";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('first_name', $first_name);
+        $statement->bindValue('last_name', $last_name);
+        $statement->bindValue('email', $email);
+        $statement->bindValue('birthday', $birthday->format('Y-m-d'));
+        $statement->bindValue('id', $id);
+
+        try {
+            $statement->executeStatement();
+            return "user updated";
+        } catch (\Exception $e) {
+            return "error: " . $e->getMessage();
+        }
+    }
 }

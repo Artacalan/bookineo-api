@@ -9,7 +9,7 @@ class UpdateBookQuery
         private string $title,
         private string $author,
         private string $isbn,
-        private \DateTimeImmutable $published_date,
+        private string $published_date,
         private string $category,
         private string $status,
         private float $price,

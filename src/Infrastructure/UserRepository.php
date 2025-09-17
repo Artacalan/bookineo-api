@@ -64,4 +64,29 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
            return "error: " . $e->getMessage();
        }
    }
+
+   public function verify_user($first_name, $last_name, $email, $birthday)
+   {
+       $sql = "SELECT * FROM users WHERE first_name = :first_name AND last_name = :last_name AND email = :email AND birthday = :birthday";
+
+       $connection = $this->getEntityManager()->getConnection();
+       $statement = $connection->prepare($sql);
+       $statement->bindValue('first_name', $first_name);
+       $statement->bindValue('last_name', $last_name);
+       $statement->bindValue('email', $email);
+       $statement->bindValue('birthday', $birthday->format('Y-m-d'));
+
+       try {
+           $result = $statement->executeQuery();
+           $user = $result->fetchAssociative();
+
+           if ($user) {
+               return "verified";
+           } else {
+               return "error: User not found";
+           }
+       } catch (\Exception $e) {
+           return "error: " . $e->getMessage();
+       }
+   }
 }

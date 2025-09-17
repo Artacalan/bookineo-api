@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Query;
+namespace App\Application\Query\User;
 
 class GetUsersQuery
 {

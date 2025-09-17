@@ -22,6 +22,9 @@ class VerifyUserController extends AbstractController
         if (isset($verify['error'])) {
             return $this->json(['status' => 'error', 'message' => $verify['error']], 400);
         } else {
+            if (!$verify) {
+                return $this->json(['status' => 'error', 'message' => 'User not found'], 404);
+            }
             return $this->json(['status' => 'success', 'message' => 'User verified successfully', 'user' => $verify]);
         }
     }

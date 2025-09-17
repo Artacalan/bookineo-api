@@ -6,5 +6,7 @@ Interface BookRepositoryInterface
 {
     public function get();
 
-    public function add($title, $author, $published_date, $isbn , $category, $status, $price, $owner);
+    public function add($title, $author,$isbn, $published_date , $category, $status, $price, $owner);
+
+    public function update($id, $title, $author,$isbn, $published_date , $category, $status, $price, $owner);
 }

@@ -67,6 +67,18 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
         $result = $statement->executeQuery();
         return $result->fetchAllAssociative();
     }
+
+    public function delete($id): array
+    {
+        $sql = "DELETE FROM books WHERE id = :id";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('id', $id);
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
 }
 
 

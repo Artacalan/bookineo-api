@@ -9,4 +9,6 @@ Interface BookRepositoryInterface
     public function add($title, $author,$isbn, $published_date , $category, $status, $price, $owner);
 
     public function update($id, $title, $author,$isbn, $published_date , $category, $status, $price, $owner);
+
+    public function delete($id);
 }

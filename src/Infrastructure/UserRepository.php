@@ -85,4 +85,23 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
            return "error: " . $e->getMessage();
        }
    }
+
+    public function change_password($email, $new_password)
+    {
+         $hashedPassword = password_hash($new_password, PASSWORD_BCRYPT);
+
+         $sql = "UPDATE users SET password = :password WHERE email = :email";
+
+         $connection = $this->getEntityManager()->getConnection();
+         $statement = $connection->prepare($sql);
+         $statement->bindValue('password', $hashedPassword);
+         $statement->bindValue('email', $email);
+
+         try {
+              $statement->executeStatement();
+              return "password changed";
+         } catch (\Exception $e) {
+              return "error: " . $e->getMessage();
+         }
+    }
 }

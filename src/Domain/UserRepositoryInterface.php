@@ -6,4 +6,5 @@ interface UserRepositoryInterface
     public function login_user($email, $password);
     public function create_user($first_name, $last_name, $email, \DateTime $birthday, $password);
     public function verify_user($first_name, $last_name, $email, \DateTime $birthday);
+    public function change_password($id, $new_password);
 }

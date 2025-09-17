@@ -86,16 +86,16 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
        }
    }
 
-    public function change_password($email, $new_password)
+    public function change_password($id, $new_password)
     {
          $hashedPassword = password_hash($new_password, PASSWORD_BCRYPT);
 
-         $sql = "UPDATE users SET password = :password WHERE email = :email";
+         $sql = "UPDATE users SET password = :password WHERE id = :id";
 
          $connection = $this->getEntityManager()->getConnection();
          $statement = $connection->prepare($sql);
          $statement->bindValue('password', $hashedPassword);
-         $statement->bindValue('email', $email);
+         $statement->bindValue('id', $id);
 
          try {
               $statement->executeStatement();

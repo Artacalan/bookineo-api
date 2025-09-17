@@ -80,11 +80,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
            $result = $statement->executeQuery();
            $user = $result->fetchAssociative();
 
-           if ($user) {
-               return "verified";
-           } else {
-               return "error: User not found";
-           }
+           return $user;
        } catch (\Exception $e) {
            return "error: " . $e->getMessage();
        }

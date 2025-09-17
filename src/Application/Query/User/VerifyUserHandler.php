@@ -12,8 +12,12 @@ class VerifyUserHandler
 
     public function handle(array $data)
     {
-        $query = VerifyUserQuery::create($data);
+        try {
+            $query = VerifyUserQuery::create($data);
 
-        return $this->repository->verify_user($query->getFirstName(), $query->getLastName(), $query->getEmail(), new \DateTime($query->getBirthday()));
+            return $this->repository->verify_user($query->getFirstName(), $query->getLastName(), $query->getEmail(), new \DateTime($query->getBirthday()));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }

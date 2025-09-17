@@ -18,14 +18,11 @@ class VerifyUserController extends AbstractController
 
         $verify = $this->handler->handle($data);
 
-        try {
-            if ($verify !== 'verified') {
-                return $this->json(['status' => 'error', 'message' => $verify], 400);
-            } else {
-                return $this->json(['status' => 'success', 'message' => 'User verified successfully']);
-            }
-        } catch (\Exception $e) {
-            return $this->json(['status' => 'error', 'message' => $e->getMessage()], 400);
+        // si verify contient un element 'error', on retourne une erreur
+        if (isset($verify['error'])) {
+            return $this->json(['status' => 'error', 'message' => $verify['error']], 400);
+        } else {
+            return $this->json(['status' => 'success', 'message' => 'User verified successfully', 'user' => $verify]);
         }
     }
 }

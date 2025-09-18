@@ -6,6 +6,7 @@ use App\Domain\BookRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Domain\Entity\Book;
+use Psr\Log\LoggerInterface;
 
 class BookRepository extends ServiceEntityRepository implements BookRepositoryInterface
 {
@@ -79,6 +80,81 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
         $result = $statement->executeQuery();
         return $result->fetchAllAssociative();
     }
+
+    public function search($title): array
+    {
+        $sql = "SELECT * FROM books WHERE title LIKE :title";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('title', '%' . $title . '%');
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
+    public function filterByStatus($status): array
+    {
+        $sql = "SELECT * FROM books WHERE status = :status";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('status', $status);
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
+    public function filterByCategory($category): array
+    {
+        $sql = "SELECT * FROM books WHERE category = :category";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('category', $category);
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
+    public function filterByAuthor($author): array
+    {
+        $sql = "SELECT * FROM books WHERE author = :author";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('author', $author);
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
+    public function filterByPrice(?float $minPrice, ?float $maxPrice): array
+    {
+        $sql = "SELECT * FROM books WHERE 1=1";
+        $params = [];
+
+        if ($minPrice !== null) {
+            $sql .= " AND price >= :minPrice";
+            $params['minPrice'] = $minPrice;
+        }
+
+        if ($maxPrice !== null) {
+            $sql .= " AND price <= :maxPrice";
+            $params['maxPrice'] = $maxPrice;
+        }
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
 }
 
 

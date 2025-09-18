@@ -8,12 +8,12 @@ class CreateBookQuery
     private string $author;
     private string $isbn;
     private string $published_date;
-    private ?string $category;
-    private bool $status;
-    private ?float $price;
-    private ?string $owner;
+    private string $category;
+    private string $status;
+    private float $price;
+    private string $owner;
 
-    public function __construct(string $title, string $author, string $isbn, string $published_date = null, string $category = null, bool $status = true, float $price = null, string $owner = null)
+    public function __construct(string $title, string $author, string $isbn, string $published_date, string $category, string $status, float $price, string $owner)
     {
         $this->title = $title;
         $this->author = $author;
@@ -26,7 +26,7 @@ class CreateBookQuery
     }
     public static function create(array $data)
     {
-        return new static($data['title'], $data['author'], $data['isbn'], $data['published_date'] ?? null, $data['category'] ?? null, $data['status'] ?? true, $data['price'] ?? null, $data['owner'] ?? null);
+        return new static($data['title'], $data['author'], $data['isbn'], $data['published_date'], $data['category'], $data['status'] , $data['price'], $data['owner']);
     }
 
     public function getTitle(): string
@@ -49,22 +49,22 @@ class CreateBookQuery
         return $this->published_date;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): string
     {
         return $this->category;
     }
 
-    public function getStatus(): bool
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    public function getOwner(): ?string
+    public function getOwner(): string
     {
         return $this->owner;
     }

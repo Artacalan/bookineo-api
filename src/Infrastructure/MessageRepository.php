@@ -15,8 +15,12 @@ class MessageRepository extends ServiceEntityRepository implements MessageReposi
     }
 
     public function get($receiver_id) {
-        // recuperer les messages du receveur, a'abord les non lu puis ensuite le reste le plus recent
-        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id ORDER BY seen ASC, send_at DESC";
+        // recuperer les messages du receveur, a'abord les non lu puis ensuite le reste le plus recent, et faire une jointure avec les users pour recuperer uniquement le nom et le prenom du sender
+        $sql = "SELECT m.*, u.first_name AS sender_first_name, u.last_name AS sender_last_name
+                FROM messages m
+                JOIN users u ON m.sender_id = u.id
+                WHERE m.receiver_id = :receiver_id
+                ORDER BY m.seen ASC, m.send_at DESC";
         $connection = $this->getEntityManager()->getConnection();
         $statement = $connection->prepare($sql);
         $statement->bindValue('receiver_id', $receiver_id);

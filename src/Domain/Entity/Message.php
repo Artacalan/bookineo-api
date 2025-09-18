@@ -20,6 +20,12 @@ final class Message
     #[ORM\Column]
     private int $sender_id;
 
+    #[ORM\Column(length: 255)]
+    private string $sender_first_name;
+
+    #[ORM\Column(length: 255)]
+    private string $sender_last_name;
+
     #[ORM\Column(type: 'text')]
     private string $content;
 
@@ -53,6 +59,28 @@ final class Message
     public function setSenderId(int $sender_id): self
     {
         $this->sender_id = $sender_id;
+        return $this;
+    }
+
+    public function getSenderFirstName(): string
+    {
+        return $this->sender_first_name;
+    }
+
+    public function setSenderFirstName(string $sender_first_name): self
+    {
+        $this->sender_first_name = $sender_first_name;
+        return $this;
+    }
+
+    public function getSenderLastName(): string
+    {
+        return $this->sender_last_name;
+    }
+
+    public function setSenderLastName(string $sender_last_name): self
+    {
+        $this->sender_last_name = $sender_last_name;
         return $this;
     }
 

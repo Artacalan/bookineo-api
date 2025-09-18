@@ -38,16 +38,27 @@ class MessageRepository extends ServiceEntityRepository implements MessageReposi
         return $result->fetchAllAssociative();
     }
 
-    public function send($sender_id, $receiver_id, $content) {
+    public function send($sender_id, $receiver_email, $content) {
+        $receiver_id_sql = "SELECT id FROM users WHERE email = :email";
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($receiver_id_sql);
+        $statement->bindValue('email', $receiver_email);
+        $result = $statement->executeQuery();
+        $receiver = $result->fetchAssociative();
+        if (!$receiver) {
+            throw new \Exception("Receiver not found");
+        }
+        $receiver_id = $receiver['id'];
         $sql = "INSERT INTO messages (sender_id, receiver_id, message)
                 VALUES (:sender_id, :receiver_id, :content)";
-        $connection = $this->getEntityManager()->getConnection();
         $statement = $connection->prepare($sql);
         $statement->bindValue('sender_id', $sender_id);
         $statement->bindValue('receiver_id', $receiver_id);
         $statement->bindValue('content', $content);
         $result = $statement->executeQuery();
         return $result->fetchAllAssociative();
+
+
     }
 
     public function seen($message_id) {

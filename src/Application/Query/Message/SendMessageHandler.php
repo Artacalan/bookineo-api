@@ -15,7 +15,7 @@ class SendMessageHandler
         try {
             $query = SendMessageQuery::create($data);
 
-            return $this->repository->send($query->getSenderId(), $query->getReceiverId(), $query->getContent());
+            return $this->repository->send($query->getSenderId(), $query->getReceiverEmail(), $query->getContent());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

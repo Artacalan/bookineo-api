@@ -4,29 +4,29 @@ namespace App\Application\Query\Message;
 
 class SendMessageQuery
 {
-    private int $receiver_id;
     private int $sender_id;
+    private string $receiver_email;
     private string $content;
 
-    public function __construct(int $receiver_id, int $sender_id, string $content)
+    public function __construct(string $receiver_email, int $sender_id, string $content)
     {
-        $this->receiver_id = $receiver_id;
+        $this->receiver_email = $receiver_email;
         $this->sender_id = $sender_id;
         $this->content = $content;
     }
 
     public static function create(array $data): static
     {
-        if (!isset($data['receiver_id']) || !isset($data['sender_id']) || !isset($data['content'])) {
+        if (!isset($data['receiver_email']) || !isset($data['sender_id']) || !isset($data['content'])) {
             throw new \InvalidArgumentException('Receiver ID, Sender ID and Content are required');
         }
 
-        return new static($data['receiver_id'], $data['sender_id'], $data['content']);
+        return new static($data['receiver_email'], $data['sender_id'], $data['content']);
     }
 
-    public function getReceiverId(): int
+    public function getReceiverEmail(): string
     {
-        return $this->receiver_id;
+        return $this->receiver_email;
     }
 
     public function getSenderId(): int

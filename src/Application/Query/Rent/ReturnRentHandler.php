@@ -13,12 +13,18 @@ class ReturnRentHandler
 
     public function handle(array $data)
     {
-        try {
-            $query = ReturnRentQuery::create($data);
+        $query = ReturnRentQuery::create($data);
 
-            return $this->repository->returnBook($query->getRentId(), $query->getBookId(), $query->getUserId());
+        try {
+            $status = $this->repository->checkStatus($query->getBookId());
+            if($status[0]['status'] == 1) {
+                throw new \Exception("This book is already returned.");
+            }
+
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
+
+        return $this->repository->returnBook($query->getRentId(), $query->getBookId(), $query->getUserId());
     }
 }

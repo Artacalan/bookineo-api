@@ -15,6 +15,9 @@ final class User //implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 36)]
     public int $id;
 
+    #[ORM\Column(length: 36)]
+    private int $user_role;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
@@ -60,6 +63,18 @@ final class User //implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getUserRole(): int
+    {
+        return $this->user_role;
+    }
+
+    public function setUserRole(int $user_role): static
+    {
+        $this->user_role = $user_role;
+
+        return $this;
     }
 
     public function getUsername(): string

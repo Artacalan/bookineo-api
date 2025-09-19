@@ -17,8 +17,11 @@ class RentRepository extends ServiceEntityRepository implements RentRepositoryIn
 
     public function get()
     {
-        $sql = "SELECT * FROM rent";
-
+        // recuperer les locations et aussi les infos du livre
+        $sql = "SELECT r.*, b.title, b.author, b.isbn, b.published_date, b.category, b.status, b.price, b.owner, u.first_name AS renter_first_name, u.last_name AS renter_last_name
+                FROM rent r
+                JOIN books b ON r.book_id = b.id
+                JOIN users u ON r.user_id = u.id";
         $connection = $this->getEntityManager()->getConnection();
         $statement = $connection->prepare($sql);
         $result = $statement->executeQuery();

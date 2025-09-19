@@ -9,7 +9,8 @@ API pour gérer les livres, les utilisateurs et les locations.
 - Composer
 
 ## Installation
-1. Cloner le dépôt  git clone https://github.com/Artacalan/bookineo-api.git ou par SSH
+1. Cloner le dépôt  
+git clone https://github.com/Artacalan/bookineo-api.git ou par SSH
 
 2. Installer les dépendances  composer install
 

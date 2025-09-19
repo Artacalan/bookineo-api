@@ -33,7 +33,7 @@ class RentRepository extends ServiceEntityRepository implements RentRepositoryIn
     public function returnBook($rent_id, $book_id, $user_id)
     {
         // dans la table rents, mettre la date de retour et dans la table book remettre le livre en statut disponible (0)
-        $sql = "UPDATE rent SET return_day = NOW() WHERE id = :rent_id AND user_id = :user_id AND book_id = :book_id AND return_day IS NULL;
+        $sql = "UPDATE rent SET return_date = NOW() WHERE id = :rent_id AND user_id = :user_id AND book_id = :book_id AND return_date IS NULL;
                 UPDATE books SET status = 1 WHERE id = :book_id;";
 
         $connection = $this->getEntityManager()->getConnection();

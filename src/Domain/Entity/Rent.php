@@ -71,12 +71,12 @@ final class Rent
         return $this;
     }
 
-    public function getNumberDateRent(): int
+    public function getNumberDaysRent(): int
     {
         return $this->number_days_rent;
     }
 
-    public function setNumberDateRent(int $days): self
+    public function setNumberDaysRent(int $days): self
     {
         $this->number_days_rent = $days;
         return $this;

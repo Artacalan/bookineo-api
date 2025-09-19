@@ -30,8 +30,11 @@ class UpdateUserQuery
         if (!isset($data['last_name'])) {
             throw new \InvalidArgumentException('Last name is required');
         }
-        if (!isset($data['email'])) {
+        if (!isset($data['email']) || empty(trim($data['email']))) {
             throw new \InvalidArgumentException('Email is required');
+        }
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('Invalid email format');
         }
         if (!isset($data['birthday'])) {
             throw new \InvalidArgumentException('Birthday is required');

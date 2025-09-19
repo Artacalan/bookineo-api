@@ -20,12 +20,17 @@ class RegisterController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $register = $this->repository->handle($data);
+        try {
+            $register = $this->repository->handle($data);
 
-        if ($register !== 'created') {
-            return $this->json(['status' => 'error', 'message' => $register], 400);
-        } else {
-            return $this->json(['status' => 'success', 'message' => 'User created successfully']);
+            if ($register !== 'created') {
+                return $this->json(['status' => 'error', 'message' => $register], 400);
+            } else {
+                return $this->json(['status' => 'success', 'message' => 'User created successfully']);
+            }
+        } catch (\Exception $e) {
+            return $this->json(['status' => 'error', 'message' => $e->getMessage()], 400);
         }
+
     }
 }

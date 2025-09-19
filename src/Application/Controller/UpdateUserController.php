@@ -21,16 +21,20 @@ class UpdateUserController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $data['id'] = $id;
 
-        $update = $this->handler->handle($data);
+        try {
+            $update = $this->handler->handle($data);
 
-        // si update contient un element 'error', on retourne une erreur
-        if (isset($update['error'])) {
-            return $this->json(['status' => 'error', 'message' => $update['error']], 400);
-        } else {
-            if (!$update) {
-                return $this->json(['status' => 'error', 'message' => 'User not found'], 404);
+            // si update contient un element 'error', on retourne une erreur
+            if (isset($update['error'])) {
+                return $this->json(['status' => 'error', 'message' => $update['error']], 400);
+            } else {
+                if (!$update) {
+                    return $this->json(['status' => 'error', 'message' => 'User not found'], 404);
+                }
+                return $this->json(['status' => 'success', 'message' => 'User updated successfully', 'user' => $update]);
             }
-            return $this->json(['status' => 'success', 'message' => 'User updated successfully', 'user' => $update]);
+        } catch (\Exception $e) {
+            return $this->json(['status' => 'error', 'message' => $e->getMessage()], 400);
         }
     }
 }

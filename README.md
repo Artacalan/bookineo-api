@@ -19,7 +19,7 @@ API pour gérer les livres, les utilisateurs et les locations.
    DATABASE_URL="mysql://user:password@127.0.0.1:3306/bookineo"
 
 4. Créer la base de données
-   Télécharger l'export SQL et l'importer dans MySQL
+   Télécharger l'export SQL `bookineo.sql` et l'importer dans MySQL
 
 5. Lancer le serveur
    symfony server:start -d

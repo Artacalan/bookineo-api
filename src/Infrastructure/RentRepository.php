@@ -57,6 +57,18 @@ class RentRepository extends ServiceEntityRepository implements RentRepositoryIn
         $result = $statement->executeQuery();
         return $result->fetchAllAssociative();
     }
+
+    public function checkStatus($book_id)
+    {
+        $sql = "SELECT status FROM books WHERE id = :book_id";
+
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->bindValue('book_id', $book_id);
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
+
     public function returnBook($rent_id, $book_id, $user_id)
     {
         // dans la table rents, mettre la date de retour et dans la table book remettre le livre en statut disponible (0)
